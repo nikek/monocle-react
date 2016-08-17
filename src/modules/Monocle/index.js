@@ -4,7 +4,6 @@ import addNewItem from './chains/addNewItem'
 
 export default module => {
   module.addState({
-    items: [],
     title: 'New Graph',
     options: {
       axis: true,

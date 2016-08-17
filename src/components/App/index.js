@@ -4,13 +4,12 @@ import NeoChart from '../NeoChart'
 import Editor from '../Editor'
 
 export default connect({
-  items: 'monocle.items',
   options: 'monocle.options'
 },
-  function App({items, options}) {
+  function App({options}) {
     return (
       <div>
-        <NeoChart items={items} options={options} />
+        <NeoChart options={options} />
         <Editor />
       </div>
     )
