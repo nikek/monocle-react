@@ -1,11 +1,11 @@
-import {toggle, set} from 'cerebral/operators'
+import {toggle, set, copy} from 'cerebral/operators'
 import updateItemTitle from './chains/updateItemTitle'
 import addNewItem from './chains/addNewItem'
 
 export default module => {
   module.addState({
     items: [],
-    newItemTitle: '',
+    title: 'New Graph',
     options: {
       axis: true,
       grid: false,
@@ -55,11 +55,11 @@ export default module => {
   })
 
   module.addSignals({
-    newItemTitleChanged: {
-      chain: updateItemTitle,
+    titleChanged: {
+      chain: [copy('input:title', 'state:monocle.title')],
       immediate: true
     },
-    newItemTitleSubmitted: addNewItem,
+    titleSubmitted: addNewItem,
     axisToggled: [toggle('state:monocle.options.axis')],
     stackedToggled: [toggle('state:monocle.options.stacked')],
     roundToggled: [toggle('state:monocle.options.round')],

@@ -5,22 +5,20 @@ import AggregationEditor from './AggregationEditor'
 import RangeEditor from './RangeEditor'
 
 export default connect({
-  newItemTitle: 'monocle.newItemTitle'
+  title: 'monocle.title'
 }, {
-  newItemTitleChanged: 'monocle.newItemTitleChanged',
-  newItemTitleSubmitted: 'monocle.newItemTitleSubmitted'
+  titleChanged: 'monocle.titleChanged'
 },
-  function Editor({newItemTitle, newItemTitleChanged, newItemTitleSubmitted}) {
+  function Editor({title, titleChanged}) {
 
-    const onFormSubmit = event => {
-      event.preventDefault()
-      newItemTitleSubmitted()
+    function handleChange(e) {
+      titleChanged({
+        title: e.target.value
+      })
     }
 
-    const onInputChange = event => {
-      newItemTitleChanged({
-        title: event.target.value
-      })
+    function handleKeyDown(e) {
+      if(e.keyCode === 13) e.target.blur()  // Blur on enter
     }
 
     return (
@@ -28,13 +26,12 @@ export default connect({
         <RangeEditor />
         <FilterEditor />
         <AggregationEditor />
-        <form onSubmit={onFormSubmit}>
-          <input
-            type="text"
-            value={newItemTitle}
-            onChange={onInputChange}
-          />
-        </form>
+        <input
+          type="text"
+          value={title}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
       </div>
     )
   }

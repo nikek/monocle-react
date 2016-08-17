@@ -10,5 +10,5 @@ export default [
 
   // We use an action factory from cerebral-addons
   // to empty the value of our input
-  set('state:monocle.newItemTitle', '')
+  set('state:monocle.title', '')
 ]

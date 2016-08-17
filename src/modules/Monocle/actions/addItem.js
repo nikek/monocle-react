@@ -2,7 +2,7 @@
 // from the state store and putting it at the top of
 // the "items" array
 function addItem ({module}) {
-  module.state.unshift('items', module.state.get('newItemTitle'))
+  module.state.unshift('items', module.state.get('title'))
 }
 
 export default addItem

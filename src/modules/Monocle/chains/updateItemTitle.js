@@ -5,5 +5,5 @@ import {copy} from 'cerebral/operators'
 export default [
   // copy the title value from the input
   // to the newItemTitle path in our state tree
-  copy('input:title', 'state:monocle.newItemTitle')
+  copy('input:title', 'state:monocle.title')
 ]
