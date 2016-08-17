@@ -20,12 +20,12 @@
     "build": "webpack --config webpack.config.js --progress --verbose"
   },
   "dependencies": {
-    "cerebral": "^0.35.x",
-    "cerebral-module-devtools": "0.7.0",
-    "cerebral-module-http": "0.4.3",
-    "cerebral-module-useragent": "^0.10.19",
-    "cerebral-provider-modules": "^0.1.2",
-    "cerebral-view-react": "^0.12.x",
+    "cerebral": "1.0.1",
+    "cerebral-module-devtools": "0.7.1",
+    "cerebral-module-http": "0.4.5",
+    "cerebral-module-useragent": "0.10.20",
+    "cerebral-provider-modules": "0.1.2",
+    "cerebral-view-react": "0.12.12",
     "react": "^15.0.x",
     "react-dom": "^15.0.x"
   },
