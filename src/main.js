@@ -16,6 +16,7 @@ import {Container} from 'cerebral-view-react'
 // App code
 import Monocle from './modules/Monocle'
 import App from './components/App'
+import './main.less'
 
 
 

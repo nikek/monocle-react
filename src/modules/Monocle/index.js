@@ -59,6 +59,10 @@ export default module => {
       immediate: true
     },
     titleSubmitted: addNewItem,
+    rangeChanged: {
+      chain: [copy('input:range', 'state:monocle.datasource.range')],
+      immediate: true
+    },
     axisToggled: [toggle('state:monocle.options.axis')],
     stackedToggled: [toggle('state:monocle.options.stacked')],
     roundToggled: [toggle('state:monocle.options.round')],
