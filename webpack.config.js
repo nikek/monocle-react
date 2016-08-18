@@ -18,7 +18,12 @@ module.exports = {
       query: {
         "presets": ["react", "es2015", "stage-0"]
       }
-    }]
+    },
+    {
+      test: /\.less$/,
+      loader: "style!css!less"
+    }
+  ]
   },
   // plugins: [
   //   new webpack.DefinePlugin({
