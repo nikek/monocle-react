@@ -1,17 +1,17 @@
 import React from 'react'
-import {connect} from 'cerebral-view-react'
 import NeoChart from '../NeoChart'
 import Editor from '../Editor'
 
-export default connect({
-  options: 'monocle.options'
-},
-  function App({options}) {
+const App = React.createClass({
+  render: function() {
     return (
       <div>
-        <NeoChart options={options} />
+        <NeoChart />
         <Editor />
       </div>
     )
   }
-)
+})
+
+
+export default App
