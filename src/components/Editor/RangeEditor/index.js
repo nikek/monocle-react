@@ -2,7 +2,8 @@ import React from 'react'
 import {Computed} from 'cerebral'
 import {connect} from 'cerebral-view-react'
 import rangeOptions from './rangeOptions'
-import './rangeEditor.less'
+import './range-editor.less'
+
 
 const inputMax = rangeOptions.length-1
 
@@ -18,11 +19,13 @@ const ticks = rangeOptions
 const currentFromRange = Computed({
   range: 'monocle.datasource.range',
 }, ({range}) => {
-  console.log(range);
+
   var currentIndex = rangeOptions.findIndex(opt => {
     return range.value === opt.content.value && range.unit === opt.content.unit
   })
 
+  // TODO: check for custom values and switch to a custom value and unit form instead.
+  // if not valid value or unit do this:
   if(currentIndex === -1)
     currentIndex = 18
 
@@ -48,12 +51,12 @@ export default connect({
       <div className="range-editor">
         <div className="slope-container">
           <div style={{width: current.width + '%'}}>
-            <svg viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 600 50">
               <path d="M600,50 L600,50 L0,50 L0,0 C30,30 50,47 600,49 Z" className="timeline-slope gray"></path>
             </svg>
           </div>
           <div style={{width: 100-current.width + '%', right:0}}>
-            <svg viewBox="0 0 600 50" style={{transform: 'translateX(' + -current.width + '%)'}} xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 600 50" style={{transform: 'translateX(' + -current.width + '%)'}}>
               <path d="M600,50 L600,50 L0,50 L0,0 C30,30 50,47 600,49 Z" className="timeline-slope"></path>
             </svg>
           </div>

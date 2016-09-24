@@ -2,8 +2,14 @@
 // an action based on your arguments
 import {copy} from 'cerebral/operators'
 
+
+function setTitle({state, input}) {
+  state.set('monocle.title', input.title)
+}
+
+
 export default [
   // copy the title value from the input
   // to the newItemTitle path in our state tree
-  copy('input:title', 'state:monocle.title')
+  setTitle
 ]

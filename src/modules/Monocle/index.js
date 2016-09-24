@@ -44,20 +44,13 @@ export default module => {
       range: {
         type: "relative",
         unit: "minutes",
-        value: 80
-      },
-      resolution: {
-        unit: "minutes",
-        value: 10
+        value: 90
       }
     }
   })
 
   module.addSignals({
-    titleChanged: {
-      chain: [copy('input:title', 'state:monocle.title')],
-      immediate: true
-    },
+    titleChanged: updateItemTitle,
     titleSubmitted: addNewItem,
     rangeChanged: {
       chain: [copy('input:range', 'state:monocle.datasource.range')],
