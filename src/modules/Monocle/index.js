@@ -13,7 +13,11 @@ export default module => {
       stacked: false,
       unit: "si",
       valueScale: "linear",
-      zeroBased: true
+      zeroBased: true,
+      range: {
+        start: 1474547939583,
+        end: 1474720739583
+      }
     },
     datasource: {
       aggregations: [
@@ -57,11 +61,12 @@ export default module => {
       chain: [copy('input:range', 'state:monocle.datasource.range')],
       immediate: true
     },
-    axisToggled: [toggle('state:monocle.options.axis')],
-    stackedToggled: [toggle('state:monocle.options.stacked')],
-    roundToggled: [toggle('state:monocle.options.round')],
-    legendVisibleToggled: [toggle('state:monocle.options.legendVisible')],
-    zeroBasedToggled: [toggle('state:monocle.options.zeroBased')],
+
+    axisUpdated: [copy('input:value', 'state:monocle.options.axis')],
+    stackedUpdated: [copy('input:value', 'state:monocle.options.stacked')],
+    roundUpdated: [copy('input:value', 'state:monocle.options.round')],
+    legendVisibleUpdated: [copy('input:value', 'state:monocle.options.legendVisible')],
+    zeroBasedUpdated: [copy('input:value', 'state:monocle.options.zeroBased')],
     unitUpdated: [function({module, input}){ module.state.set('options.unit', input.value)}],
     valueScaleUpdated: [function({module, input}){ module.state.set('options.valueScale', input.value)}]
   })

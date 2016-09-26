@@ -7,25 +7,31 @@ import formatResponse from './computed/formatResponse'
 
 export default connect({
   opts: 'monocle.options',
+  width: 'useragent.window.width',
   data: formatResponse()
 }, {
   signals: 'monocle'
 },
-  function NeoChart({signals,opts,data}) {
+  function NeoChart({signals,opts,data, width}) {
 
-    function handleUnit(e) {
-      signals.unitUpdated({value: e.target.value})
+    const onChangeFns = {
+      axis(e) {signals.axisUpdated({value: e.target.checked})},
+      legendVisible(e) {signals.legendVisibleUpdated({value: e.target.checked})},
+      round(e) {signals.roundUpdated({value: e.target.checked})},
+      zeroBased(e) {signals.zeroBasedUpdated({value: e.target.checked})},
+      stacked(e) {signals.stackedUpdated({value: e.target.checked})},
+      unit(e) {signals.unitUpdated({value: e.target.value})},
+      valueScale(e) {signals.valueScaleUpdated({value: e.target.value})}
     }
-
-    function handleValueScale(e) {
-      signals.valueScaleUpdated({value: e.target.value})
-    }
-
 
     return (
       <div>
-        <NeoChartOptions options={ opts } />
-        <NeoChartCanvas options={ opts } />
+        <NeoChartOptions options={ opts } onChangeFns={ onChangeFns } />
+        <NeoChartCanvas
+          data={ data }
+          opts={ opts }
+          width={ width }
+          height="300" />
       </div>
     )
   }

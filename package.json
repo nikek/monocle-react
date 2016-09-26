@@ -26,6 +26,8 @@
     "cerebral-module-useragent": "0.10.20",
     "cerebral-provider-modules": "0.1.2",
     "cerebral-view-react": "0.12.12",
+    "d3": "^4.2.6",
+    "normalize.css": "^4.2.0",
     "react": "^15.0.x",
     "react-dom": "^15.0.x"
   },
@@ -38,7 +40,6 @@
     "css-loader": "^0.23.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "normalize.css": "^4.2.0",
     "style-loader": "^0.13.1",
     "uglifyjs": "^2.4.10",
     "webpack": "^1.13.x",

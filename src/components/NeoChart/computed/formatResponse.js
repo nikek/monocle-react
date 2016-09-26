@@ -1,5 +1,5 @@
 import {Computed} from 'cerebral'
-
+import {stack} from 'd3-shape'
 
 
 
@@ -19,11 +19,45 @@ function fillInTheBlanksOptions(opt) {
   return Object.assign(defaultOptions, opt);
 }
 
+/**
+* Function to stack all time series according to their value.
+* Note: not using d3.layout.stack because it gives unpredictable ordering in
+* our case.
+*/
+function stackFn(series) {
+  // 'stacked' values for each x value.
+  var y0vals = {};
+
+  for (var i = series.length - 1; i >= 0; i--) {
+    var d = series[i].dataPoints;
+
+    for (var j = 0, jl = d.length; j < jl; j++) {
+      var p = d[j];
+      var y0 = y0vals[p.x] || 0;
+      y0vals[p.x] = y0 + p.y;
+      p.y0 = y0;
+    }
+  }
+}
+/**
+* Function to unstack all time series.
+*/
+function unstackFn(series) {
+  for (var i = 0, l = series.length; i < l; i++) {
+    var d = series[i].dataPoints;
+
+    for (var j = 0, jl = d.length; j < jl; j++) {
+      d[j].y0 = 0;
+    }
+  }
+}
+
+
 function formatSeriesToLayout(s, opt) {
   if (opt.stacked === true) {
-    this.stackFn(s);
+    stackFn(s)
   } else {
-    this.unstackFn(s);
+    unstackFn(s)
   }
 }
 function fillInTheBlanksSeries(inputSeries) {
@@ -116,8 +150,9 @@ function formatSeries(series) {
 
 
 export default Computed({
-  response: 'monocle.response'
-}, ({response}) => {
+  response: 'monocle.response',
+  options: 'monocle.options'
+}, ({response, options}) => {
   const data = {}
 
   // in order to strip away common tags from the name
@@ -129,6 +164,7 @@ export default Computed({
 
   data.series = response.result.map(formatSeries)
 
-  console.log(data)
+  formatSeriesToLayout(data.series, options)
+  console.log(data.series)
   return data
 })

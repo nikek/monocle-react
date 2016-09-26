@@ -2,14 +2,6 @@ import React from 'react'
 import {connect} from 'cerebral-view-react'
 
 
-const checkboxOptions = [
-  { name: 'stacked', label: 'Stacked' },
-  { name: 'axis', label: 'Axis' },
-  { name: 'zeroBased', label: 'Zero Based' },
-  { name: 'round', label: 'Round' },
-  { name: 'legendVisible', label: 'Legend' }
-]
-
 const unitOptions = [
   { label: 'None', val: '' },
   { label: '%', val: '%' },
@@ -25,43 +17,26 @@ const scaleOptions = [
   { label: 'Cube Root (👍 for 0)', val: 'powOneThird' }
 ];
 
-export default connect({
-  opts: 'monocle.options'
-}, {
-  signals: 'monocle'
-},
-  function NeoChartOptions({signals,opts}) {
+const NeoChartOptions = React.createClass({
+  render: function() {
+    const {options, onChangeFns} = this.props
 
-    function handleUnit(e) {
-      signals.unitUpdated({value: e.target.value})
-    }
-
-    function handleValueScale(e) {
-      signals.valueScaleUpdated({value: e.target.value})
-    }
-
-    /* Looks messy.. Form component or just manually laying the options out..? */
     return (
       <div className="neo-chart-options">
-        {
-          checkboxOptions.map((opt, i) => (
-            <label key={i}>
-              <input type="checkbox"
-                checked={ opts[opt.name] }
-                onChange={ () => signals[opt.name+'Toggled']() } />
-              {opt.label}
-            </label>
-          ))
-        }
+        <label><input type="checkbox" checked={options.stacked} onChange={onChangeFns.stacked} /> Stacked</label>
+        <label><input type="checkbox" checked={options.axis} onChange={onChangeFns.axis} /> Axis</label>
+        <label><input type="checkbox" checked={options.round} onChange={onChangeFns.round} /> Round</label>
+        <label><input type="checkbox" checked={options.zeroBased} onChange={onChangeFns.zeroBased} /> Zero Based</label>
+        <label><input type="checkbox" checked={options.legendVisible} onChange={onChangeFns.legendVisible} /> Legend</label>
 
-        <select value={ opts.unit } onChange={ handleUnit }>
+        <select value={options.unit} onChange={onChangeFns.unit}>
           {unitOptions.map((opt, i) => (
             <option key={i} value={opt.val}>{opt.label}</option>
           ))}
         </select>
         Unit/Prefix
 
-        <select value={opts.valueScale} onChange={handleValueScale}>
+        <select value={options.valueScale} onChange={onChangeFns.valueScale}>
           {scaleOptions.map((opt, i) => (
             <option key={i} value={opt.val} >{opt.label}</option>
           ))}
@@ -70,4 +45,6 @@ export default connect({
       </div>
     )
   }
-)
+})
+
+export default NeoChartOptions
