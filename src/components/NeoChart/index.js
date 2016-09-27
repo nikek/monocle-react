@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'cerebral-view-react'
 import NeoChartOptions from './NeoChartOptions'
 import NeoChartCanvas from './NeoChartCanvas'
-import formatResponse from './computed/formatResponse'
+import formatResponse from '../../modules/Monocle/computed/formatResponse'
 import './styles.less'
 
 
