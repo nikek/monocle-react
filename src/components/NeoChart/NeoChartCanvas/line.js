@@ -1,32 +1,36 @@
 import React from 'react'
 import {line as d3line} from 'd3-shape'
-import {scaleSequential, interpolatePlasma} from 'd3-scale'
+import {scaleSequential, interpolateWarm} from 'd3-scale'
 
-const colorize = scaleSequential(interpolatePlasma)
-let plotLine
+const colorize = scaleSequential(interpolateWarm)
 
 const NeoLine = React.createClass({
   render: function() {
     const p = this.props
+    let plotLine
+    let lines
 
     if(p.xScale && p.yScale){
       plotLine = d3line()
         .x(d => p.xScale(d.x))
         .y(d => p.yScale(d.y+d.y0))
+
+      lines = p.data.series.map((line, i) => {
+        return <path
+          d={ plotLine(line.dataPoints) }
+          stroke={ colorize(i/(p.data.series.length-1)) }
+          className="line"
+          fill="none"
+          key={i} />
+      })
+    }
+    else {
+      lines = []
     }
 
-    return (
-      <g>
-        { p.data.series.map((line, i) => {
-          return <path
-            fill="none"
-            stroke={ colorize(i/p.data.series.length) }
-            className={`${line.color} line`}
-            d={plotLine(line.dataPoints)}
-            key={i}/>
-          })
-        }
-      </g>)
+    const translate = `translate(0, 0)`
+
+    return <g transform={ translate } >{ lines }</g>
   }
 
 })

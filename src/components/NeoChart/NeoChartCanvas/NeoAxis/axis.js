@@ -9,23 +9,35 @@ const orientations = {
   left: axisLeft
 }
 
-export default class Axis extends React.Component {
-  componentDidMount() {
-    this.renderAxis()
-  }
-
-  componentDidUpdate() {
-    this.renderAxis()
-  }
-
+const Axis = React.createClass({
+  componentDidMount() { this.renderAxis() },
+  componentDidUpdate() { this.renderAxis() },
   renderAxis() {
-    const elem = this.refs.axis
-    const axis = orientations[this.props.orient](this.props.scale)
+    const axisWrap = this.refs.axis
+    const axisFn = orientations[this.props.orient](this.props.scale)
+      .tickSize(this.props.tickSize)
 
-    select(elem).call(axis)
-  }
+    const axisEl = select(axisWrap).call(axisFn)
 
+    if(this.props.orient === 'left') {
+      axisEl.selectAll('text')
+        .style('text-anchor', 'start')
+        .attr('y', '-8px')
+        .attr('x', -this.props.tickSize + 5)
+    }
+    else {
+      axisEl.selectAll('text')
+        .attr('y', '14px')
+    }
+
+    axisEl.selectAll('line')
+      .attr('stroke', 'white')
+      .attr('opacity', .12);
+
+  },
   render() {
     return <g className="axis" ref="axis" transform={this.props.translate}></g>
   }
-}
+})
+
+export default Axis

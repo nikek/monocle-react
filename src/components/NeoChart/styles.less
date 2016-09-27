@@ -1,0 +1,28 @@
+.neo-chart {
+  g, line {
+    fill: none;
+  }
+
+  text {
+    fill: white;
+  }
+
+  .line {
+    stroke-width: 1.5;
+
+    &.focus {
+      stroke-width: 3.0;
+    }
+
+    &.unfocus {
+      stroke: #999999;
+    }
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+  }
+  .axis path { display: none; }
+  .axis line { shape-rendering: crispEdges; }
+}

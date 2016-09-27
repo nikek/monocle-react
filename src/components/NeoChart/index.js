@@ -3,6 +3,7 @@ import {connect} from 'cerebral-view-react'
 import NeoChartOptions from './NeoChartOptions'
 import NeoChartCanvas from './NeoChartCanvas'
 import formatResponse from './computed/formatResponse'
+import './styles.less'
 
 
 export default connect({
@@ -25,13 +26,13 @@ export default connect({
     }
 
     return (
-      <div>
+      <div className="neo-chart">
         <NeoChartOptions options={ opts } onChangeFns={ onChangeFns } />
         <NeoChartCanvas
           data={ data }
           opts={ opts }
           width={ width }
-          height="300" />
+          height="300"/>
       </div>
     )
   }

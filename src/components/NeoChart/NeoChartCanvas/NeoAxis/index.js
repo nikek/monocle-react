@@ -6,15 +6,17 @@ const NeoAxis = React.createClass({
     const props = this.props
 
     const xSettings = {
-      translate: `translate(0, ${props.height - props.padding})`,
+      translate: `translate(0, ${props.height - props.paddingBottom})`,
+      tickSize: props.height - props.paddingBottom,
       scale: props.xScale,
-      orient: 'bottom'
-    };
+      orient: 'top'
+    }
     const ySettings = {
-      translate: `translate(${props.padding}, 0)`,
+      translate: `translate(${props.width}, 0)`,
+      tickSize: props.width,
       scale: props.yScale,
-      orient: 'right'
-    };
+      orient: 'left'
+    }
     return (
       <g className="neo-axis">
         <Axis {...xSettings}/>
