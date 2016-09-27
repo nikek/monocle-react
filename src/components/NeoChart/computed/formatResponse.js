@@ -1,23 +1,19 @@
 import {Computed} from 'cerebral'
-import {stack} from 'd3-shape'
-
-
-
 
 const colorScheme = ["red", "teal",  "blue", "green",  "yellow", "navy", "forest", "orange", "pink", "purple"]
-
-function fillInTheBlanksOptions(opt) {
-  var defaultOptions = {
-    stacked: false,
-    grid: false,
-    axis: true,
-    unit: '',
-    round: true,
-    legendVisible: true
-  };
-
-  return Object.assign(defaultOptions, opt);
-}
+//
+// function fillInTheBlanksOptions(opt) {
+//   var defaultOptions = {
+//     stacked: false,
+//     grid: false,
+//     axis: true,
+//     unit: '',
+//     round: true,
+//     legendVisible: true
+//   };
+//
+//   return Object.assign(defaultOptions, opt);
+// }
 
 /**
 * Function to stack all time series according to their value.
@@ -28,12 +24,12 @@ function stackFn(series) {
   // 'stacked' values for each x value.
   var y0vals = {};
 
-  for (var i = series.length - 1; i >= 0; i--) {
-    var d = series[i].dataPoints;
+  for (let i = series.length-1; i>=0; i--) {
+    let d = series[i].dataPoints;
 
-    for (var j = 0, jl = d.length; j < jl; j++) {
-      var p = d[j];
-      var y0 = y0vals[p.x] || 0;
+    for (let j = 0, jlen = d.length; j < jlen; j++) {
+      let p = d[j];
+      let y0 = y0vals[p.x] || 0;
       y0vals[p.x] = y0 + p.y;
       p.y0 = y0;
     }
@@ -43,23 +39,15 @@ function stackFn(series) {
 * Function to unstack all time series.
 */
 function unstackFn(series) {
-  for (var i = 0, l = series.length; i < l; i++) {
-    var d = series[i].dataPoints;
+  for (let i = series.length-1; i>=0; i--) {
+    let d = series[i].dataPoints;
 
-    for (var j = 0, jl = d.length; j < jl; j++) {
+    for (let j = 0, jlen = d.length; j < jlen; j++) {
       d[j].y0 = 0;
     }
   }
 }
 
-
-function formatSeriesToLayout(s, opt) {
-  if (opt.stacked === true) {
-    stackFn(s)
-  } else {
-    unstackFn(s)
-  }
-}
 function fillInTheBlanksSeries(inputSeries) {
   var newSeries = [];
 
@@ -112,19 +100,19 @@ function seriesTags(source) {
 };
 
 
-export default function mergeData({state, input}) {
-
-  var series = input.result.result.map(function(series) {
-    return formatSeries(series);
-  });
-
-
-  series = fillInTheBlanksSeries(series, colorScheme);
-  sortByName(series);
-  colorize(series);
-
-
-}
+// export default function mergeData({state, input}) {
+//
+//   var series = input.result.result.map(function(series) {
+//     return formatSeries(series);
+//   });
+//
+//
+//   series = fillInTheBlanksSeries(series, colorScheme);
+//   sortByName(series);
+//   colorize(series);
+//
+//
+// }
 
 
 // Turn response series together with config into properly fomatted time series.
@@ -155,16 +143,17 @@ export default Computed({
 }, ({response, options}) => {
   const data = {}
 
-  // in order to strip away common tags from the name
+  // in order to strip away common tags from the name only make use of identifying Tags Keys
   // const identifyingTagsKeys =
 
+  // Set range
   data.range = response.range
 
-  // Find series idintifying tags
-
+  // Format series to alien format
   data.series = response.result.map(formatSeries)
 
-  formatSeriesToLayout(data.series, options)
-  console.log(data.series)
+  // Layout the time series
+  options.stacked === true ? stackFn(data.series) : unstackFn(data.series)
+
   return data
 })
